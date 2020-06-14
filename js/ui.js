@@ -1,44 +1,52 @@
-const UIController = (function(){
+const UIController = (function () {
     const domElements = {
-        choices:document.querySelectorAll('.game__control'),
-        rulesBtn:document.querySelector('.rulesBtn'),
-        closeBtn:document.querySelector('.close'),
-        playAgainBtn:document.querySelector('.playAgain'),
-        finalText:document.querySelector('.game__finalText'),
-        playerSide:document.querySelector('.player'),
-        cpuSide:document.querySelector('.cpu'),
-        gameScore:document.querySelector('.game__score'),
-        resultPanel:document.querySelector('.game__result'),
-        finalPanel:document.querySelector('.game__final'),
-        controlPanel:document.querySelector('.game__controls'),
-        rulesPanel:document.querySelector('.rules__container')
+        choices: document.querySelectorAll(".game__control"),
+        rulesBtn: document.querySelector(".rulesBtn"),
+        closeBtn: document.querySelector(".close"),
+        playAgainBtn: document.querySelector(".playAgain"),
+        finalText: document.querySelector(".game__finalText"),
+        playerSide: document.querySelector(".player"),
+        cpuSide: document.querySelector(".cpu"),
+        gameScore: document.querySelector(".game__score"),
+        resultPanel: document.querySelector(".game__result"),
+        finalPanel: document.querySelector(".game__final"),
+        controlPanel: document.querySelector(".game__controls"),
+        rulesPanel: document.querySelector(".rules__container"),
+    };
+
+    function updateScore(score) {
+        domElements.gameScore.textContent =
+            score < 10 && !(score < 0) ? (score = `0${score}`) : score;
     }
 
-    function updateScore(score){
-            domElements.gameScore.textContent = score < 10 && !(score < 0)  ? score = `0${score}` : score; 
-    }
+    function addWinnerClass(winner) {
+        setTimeout(() => {
+            if (winner.includes("Win")) {
+                document
+                    .querySelector(".playerElement")
+                    .classList.add("winner");
+            } else if (winner.includes("Lose")) {
+                document.querySelector(".cpuElement").classList.add("winner");
+            } else {
+                document
+                    .querySelector(".playerElement")
+                    .classList.add("winner");
 
-    function addWinnerClass(winner){
-    
-        setTimeout(()=>{
-            if(winner.includes('Win')){
-                document.querySelector('.playerElement').classList.add('winner');
-            }else{
-                document.querySelector('.cpuElement').classList.add('winner');
+                document.querySelector(".cpuElement").classList.add("winner");
             }
-        },500);
+        }, 500);
     }
 
-    return{
-        elements:domElements,
+    return {
+        elements: domElements,
 
-        updateScore:updateScore,
+        updateScore: updateScore,
 
-        displayResult:function(playerChoice,cpuChoice,winner,callback){
-            let playerClass,cpuClass;
-            domElements.controlPanel.classList.remove('showControls');
-            domElements.resultPanel.classList.add('showResult');
-            winner.includes('Win') ? playerClass = 'winner' : '';
+        displayResult: function (playerChoice, cpuChoice, winner, callback) {
+            let playerClass, cpuClass;
+            domElements.controlPanel.classList.remove("showControls");
+            domElements.resultPanel.classList.add("showResult");
+            winner.includes("Win") ? (playerClass = "winner") : "";
             domElements.playerSide.innerHTML = `
             <div class="element ${playerChoice} playerElement">
               <div class="holder">
@@ -47,8 +55,8 @@ const UIController = (function(){
             </div>
             `;
 
-            setTimeout(()=>{
-                winner.includes('Win') ? '' : cpuClass = 'winner'
+            setTimeout(() => {
+                winner.includes("Win") ? "" : (cpuClass = "winner");
                 domElements.cpuSide.innerHTML = `
                 <div class="element ${cpuChoice} cpuElement">
                 <div class="holder">
@@ -60,18 +68,16 @@ const UIController = (function(){
                 addWinnerClass(winner);
                 // display final result
                 domElements.finalText.textContent = winner;
-                domElements.finalPanel.classList.add('showFinal');
+                domElements.finalPanel.classList.add("showFinal");
                 callback();
-
-            },1500);
-           
+            }, 1500);
         },
 
-        showRules:function(){
-            domElements.rulesPanel.classList.add('showRules');
+        showRules: function () {
+            domElements.rulesPanel.classList.add("showRules");
         },
-        hideRules:function(){
-            domElements.rulesPanel.classList.remove('showRules');
-        }
-    }
-})()
+        hideRules: function () {
+            domElements.rulesPanel.classList.remove("showRules");
+        },
+    };
+})();
