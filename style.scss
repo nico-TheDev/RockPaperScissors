@@ -385,6 +385,10 @@ body{
         background-color: transparent;
         cursor: pointer;
         justify-self: end;
+
+        @include query(cp){
+            justify-self:center;
+        }
     }
 }
 

@@ -473,6 +473,13 @@ body {
       justify-self: end;
 }
 
+@media only screen and (max-width: 600px) {
+  .rules .close {
+    -ms-grid-column-align: center;
+        justify-self: center;
+  }
+}
+
 .rulesBtn {
   background-color: transparent;
   border: 1px solid white;
